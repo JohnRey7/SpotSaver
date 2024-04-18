@@ -3,18 +3,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     background-image: url('/CIT-U_GLE_Building_01.original.png');
     background-size: cover;
     background-position: center;
   }
   
   .SignUpBox {
-    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    background: rgba(255, 255, 255, 0.8); 
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
     width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
   }
   
   .SignUpHeader {
@@ -58,7 +59,7 @@
   }
   
   .SignUpButton:hover {
-    background-color: #ec971f; /* Slightly darker on hover */
+    background-color: #ec971f;
   }
   
   .LoginRedirect {
@@ -68,7 +69,7 @@
   }
   
   .LoginRedirect a {
-    color: #337ab7; /* Bootstrap primary color */
+    color: #337ab7;
     text-decoration: none;
   }
   
