@@ -14,9 +14,9 @@ function Home() {
            <div className="LoginHeader">login</div>
             <div className="inputs">
             <label className='label'>Email</label>
-            <input className="email" placeholder='Enter email'/>
-            <label className='label'>Password</label>
-            <input className="password" placeholder='Enter password'/>
+            <input type="email" className="email" placeholder='Enter email'/>
+            <label  className='label'>Password</label>
+            <input type="password" className="password" placeholder='Enter password'/>
             </div>
             <div className="RegisterRedirect">
             Create Memories, <Link href="/register">Register here</Link>
