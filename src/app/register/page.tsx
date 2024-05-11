@@ -1,26 +1,74 @@
+"use client";
+import React, { useState } from 'react';
 import Link from 'next/link';
-import React from 'react';
-import './reg.css';
+import { useRouter } from 'next/navigation';
+import styles from "@/app/register/reg.module.css";
 
-function register() {
+function SignUpForm() {
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [message, setMessage] = useState('');
+  const router = useRouter();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setMessage('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        router.push('/login'); // Redirect to login page on successful registration
+        setMessage('');
+      } else {
+        setMessage(data.message || 'Registration failed');
+      }
+    } catch (error) {
+      setMessage('Failed to connect to the server.');
+    }
+  };
+
   return (
-    <div className="SignUpBackground">
-      <div className="SignUpBox">
-        <h2 className="SignUpHeader">Sign Up</h2>
-        <div className="Form">
-          <input type="text" className="InputField Half" placeholder="First Name" />
-          <input type="text" className="InputField Half" placeholder="Last Name" />
-          <input type="email" className="InputField" placeholder="Email" />
-          <input type="password" className="InputField" placeholder="Password" />
-          <input type="password" className="InputField" placeholder="Confirm Password" />
-          <button className="SignUpButton">Sign Up</button>
-          <div className="LoginRedirect">
-            Already have an account? <Link href="/">Login here</Link>
+    <div className={styles.SignUpBackground}>
+      <form className={styles.SignUpBox} onSubmit={handleSubmit}>
+        <h2 className={styles.SignUpHeader}>Sign Up</h2>
+        <div className={styles.Form}>
+          <input type="text" name="firstname" className={styles.InputField} placeholder="First Name" value={formData.firstname} onChange={handleChange} />
+          <input type="text" name="lastname" className={styles.InputField} placeholder="Last Name" value={formData.lastname} onChange={handleChange} />
+          <input type="email" name="email" className={styles.InputField} placeholder="Email" value={formData.email} onChange={handleChange} />
+          <input type="password" name="password" className={styles.InputField} placeholder="Password" value={formData.password} onChange={handleChange} />
+          <input type="password" name="confirmPassword" className={styles.InputField} placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} />
+          <button type="submit" className={styles.SignUpButton}>Proceed</button>
+          {message && <p className={styles.message}>{message}</p>}
+          <div className={styles.LoginRedirect}>
+            Already have an account? <Link href="/login">Login here</Link>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
-};
+}
 
-export default register;
+export default SignUpForm;
