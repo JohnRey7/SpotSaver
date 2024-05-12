@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { hash } from 'bcrypt';
 import * as z from 'zod';
 
+
 const userSchema = z
   .object({
     firstname: z.string().min(1, 'firstname is required').max(100),
