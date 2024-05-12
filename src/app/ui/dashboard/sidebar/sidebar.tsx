@@ -1,7 +1,13 @@
+
 import styles from "./sidebar.module.css";
 import React from 'react';
-import Image from 'next/image'; // Ensure you are importing Image from 'next/image'
+import Image from 'next/image'; 
 import MenuLink from "./menuLink/menuLink";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
+import UserAccountNav from "../../UserAccountNav";
 
 const menuItems = [
     {
@@ -9,11 +15,11 @@ const menuItems = [
       list: [
         {
           title: "User Management",
-          path: "/dashboard/userm",
+          path: "/dashboard/admin/userm",
         },
         {
           title: "Parking Management",
-          path: "/dashboard/parkm",
+          path: "/dashboard/admin/parkm",
         },
         {
           title: "Reports and Analytics",
@@ -31,7 +37,8 @@ const menuItems = [
     },
 ];
     
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC = async () => {
+  const session = await getServerSession(authOptions);
     return (
         <div className={styles.container}>
             <div className={styles.logo}>
@@ -47,7 +54,12 @@ const Sidebar: React.FC = () => {
                     </li>
                 ))}
             </ul>
-            <button className={styles.logoutButton}>Log out</button>
+            {session?.user ? (
+             <UserAccountNav/>
+            ) : (
+              <button className={styles.logoutButton}><Link href='/login'>Sign in</Link></button>
+            )}
+            
         </div>
     );
 }

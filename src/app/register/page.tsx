@@ -1,74 +1,77 @@
 "use client";
-import React, { useState } from 'react';
+import styles from "@/app/register/reg.module.css";
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import styles from "@/app/register/reg.module.css";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 
-function SignUpForm() {
-  const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+
+const FormSchema = z
+  .object({
+    firstname: z.string().min(1, 'Firstname is required').max(100),
+    lastname: z.string().min(1, 'Lastname is required').max(100),
+    email: z.string().min(1, 'Email is required').email('Invalid email'),
+    password: z
+      .string()
+      .min(1, 'Password is required')
+      .min(8, 'Password must have than 8 characters'),
+    confirmPassword: z.string().min(1, 'Password confirmation is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Password do not match',
   });
-  const [message, setMessage] = useState('');
-  const router = useRouter();
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      setMessage('Passwords do not match');
-      return;
-    }
-
-    try {
+  const SignUpForm = () => {
+    const router = useRouter();
+    const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof FormSchema>>({
+      resolver: zodResolver(FormSchema),
+      defaultValues: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      },
+    });
+  
+    const onSubmit = async (values: z.infer<typeof FormSchema>) => {
       const response = await fetch('/api/user', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstname: formData.firstname,
-          lastname: formData.lastname,
-          email: formData.email,
-          password: formData.password
-        })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(values)
       });
-      const data = await response.json();
       if (response.ok) {
-        router.push('/login'); // Redirect to login page on successful registration
-        setMessage('');
+        router.push('./login');
       } else {
-        setMessage(data.message || 'Registration failed');
+        console.error('Registration failed!');
       }
-    } catch (error) {
-      setMessage('Failed to connect to the server.');
-    }
-  };
-
-  return (
-    <div className={styles.SignUpBackground}>
-      <form className={styles.SignUpBox} onSubmit={handleSubmit}>
-        <h2 className={styles.SignUpHeader}>Sign Up</h2>
-        <div className={styles.Form}>
-          <input type="text" name="firstname" className={styles.InputField} placeholder="First Name" value={formData.firstname} onChange={handleChange} />
-          <input type="text" name="lastname" className={styles.InputField} placeholder="Last Name" value={formData.lastname} onChange={handleChange} />
-          <input type="email" name="email" className={styles.InputField} placeholder="Email" value={formData.email} onChange={handleChange} />
-          <input type="password" name="password" className={styles.InputField} placeholder="Password" value={formData.password} onChange={handleChange} />
-          <input type="password" name="confirmPassword" className={styles.InputField} placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} />
-          <button type="submit" className={styles.SignUpButton}>Proceed</button>
-          {message && <p className={styles.message}>{message}</p>}
-          <div className={styles.LoginRedirect}>
-            Already have an account? <Link href="/login">Login here</Link>
+    };
+  
+    return (
+      <div className={styles.SignUpBackground}>
+        <form className={styles.SignUpBox} onSubmit={handleSubmit(onSubmit)}>
+          <h2 className={styles.SignUpHeader}>Sign Up</h2>
+          <div className={styles.Form}>
+            <input type="text" {...register('firstname')} className={styles.InputField} placeholder="First Name" />
+            {errors.firstname && <p className={styles.message}>{errors.firstname.message}</p>}
+            <input type="text" {...register('lastname')} className={styles.InputField} placeholder="Last Name" />
+            {errors.lastname && <p className={styles.message}>{errors.lastname.message}</p>}
+            <input type="email" {...register('email')} className={styles.InputField} placeholder="Email" />
+            {errors.email && <p className={styles.message}>{errors.email.message}</p>}
+            <input type="password" {...register('password')} className={styles.InputField} placeholder="Password" />
+            {errors.password && <p className={styles.message}>{errors.password.message}</p>}
+            <input type="password" {...register('confirmPassword')} className={styles.InputField} placeholder="Confirm Password" />
+            {errors.confirmPassword && <p className={styles.message}>{errors.confirmPassword.message}</p>}
+            <button type="submit" className={styles.SignUpButton}>Sign Up</button>
+            <div className={styles.LoginRedirect}>
+              Already have an account? <Link href="./login">Login here</Link>
+            </div>
           </div>
-        </div>
-      </form>
-    </div>
-  );
-}
+        </form>
+      </div>
+    );
+  };
 
 export default SignUpForm;

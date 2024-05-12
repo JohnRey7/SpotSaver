@@ -10,7 +10,8 @@ function Home() {
     return (
         <div className="Login">
          homepage
-         <button><Link href="./login">Sign in </Link></button>
+         <button><Link href="">Sign in </Link></button>
+         <button><Link href="./login">Sign in to Admin </Link></button>
         </div>
     );
 };

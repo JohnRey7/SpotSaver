@@ -78,7 +78,6 @@
   }
   
   .message{
-    text-align: center;
-    margin-top: 15px;
-    color:black;
+   
+    color:rgb(160, 0, 0);
   }
