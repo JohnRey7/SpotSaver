@@ -30,6 +30,10 @@
   background-color: #9C9C9C;
 }
 
+.logoutButton:hover{
+  background-color: #800;
+}
+
 .cat{
   color: var(--textSoft);
   font-weight: bold;

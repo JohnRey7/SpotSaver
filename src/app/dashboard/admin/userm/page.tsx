@@ -6,7 +6,7 @@ import { db } from '@/lib/db';
 import { FC } from 'react';
 
 
-interface userName{
+interface userm{
     names:{
         id: string;
         firstname: string;
@@ -25,7 +25,7 @@ async function getName(){
     return response;
 }
 
-const Users: FC<userName> = async ({names}) => {
+const Users: FC<userm> = async ({names}) => {
     const session = await getServerSession(authOptions);
     const name = await getName();
     console.log(name);

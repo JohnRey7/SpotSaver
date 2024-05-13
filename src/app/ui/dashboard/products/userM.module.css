@@ -17,8 +17,9 @@
     background-color: #EFDF05;
     color: white;
     border: none;
+    position: absolute;
     padding: 10px 30px;
-    margin-left: 850px;
+    margin-left: 1200px;
     border-radius: 10px;
 }
 .h2{
@@ -27,8 +28,10 @@
 .buttonDelete {
     background-color: #800000;
     border-radius: 10px;
+    position: absolute;
     color: white;
     border: none;
+    margin-left: 1300px;
     padding: 10px 20px;
 }
 .span{
