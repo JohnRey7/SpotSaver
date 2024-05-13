@@ -1,79 +1,80 @@
-
-.SignUpBackground {
+.Login {
     display: flex;
     justify-content: center;
     align-items: center;
+    color:black;
     height: 100vh;
+    position: fixed;
+    width: 100vw;
     background-image: url('/CIT-U_GLE_Building_01.original.png');
     background-size: cover;
     background-position: center;
   }
   
-  .SignUpBox {
+  .LoginBox {
     background: rgba(255, 255, 255, 0.8); 
     padding: 40px;
     border-radius: 8px;
     width: 400px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
   }
   
-  .SignUpHeader {
+  .LoginHeader {
     text-align: center;
-    margin-bottom: 30px;
-    color: black;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
   }
   
-  .Form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .InputField {
+  .inputs input {
+    width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin: 10px 0;
+    border: none;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 4px;
     border-color: #ec971f;
   }
   
-  
-  .Half {
-    width: calc(50% - 10px); 
-    display: inline-block;
-  }
-  
-  .InputField:not(.Half) {
+  .submitbutton {
     width: 100%;
-  }
-  
-  .SignUpButton {
     padding: 10px;
-    width: 100%;
     background-color: #f0ad4e; 
     color: black;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
   }
   
-  .SignUpButton:hover {
-    background-color: #ec971f;
+  .submitbutton:hover {
+    background-color: #ec971f; 
   }
-  
-  .LoginRedirect {
-    text-align: center;
-    margin-top: 15px;
+  .label{
+
     color:black;
   }
+  .b{
+    font-size: small;
+    color:black;
+  }
+  .h5{
+    text-align: center;
+  }
+
+  .RegisterRedirect {
+    text-align: left;
+    margin-top: 15px;
+    color:black;
+    font-size: small;
+  }
   
-  .LoginRedirect a {
+  .RegisterRedirect a {
     color: #337ab7;
     text-decoration: none;
   }
   
-  .LoginRedirect a:hover {
+  .RegisterRedirect a:hover {
     text-decoration: underline;
   }
   

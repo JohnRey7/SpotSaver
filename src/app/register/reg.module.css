@@ -1,0 +1,83 @@
+
+.SignUpBackground {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('/CIT-U_GLE_Building_01.original.png');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .SignUpBox {
+    background: rgba(255, 255, 255, 0.8); 
+    padding: 40px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  }
+  
+  .SignUpHeader {
+    text-align: center;
+    margin-bottom: 30px;
+    color: black;
+  }
+  
+  .Form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .InputField {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    border-color: #ec971f;
+  }
+  
+  
+  .Half {
+    width: calc(50% - 10px); 
+    display: inline-block;
+  }
+  
+  .InputField:not(.Half) {
+    width: 100%;
+  }
+  
+  .SignUpButton {
+    padding: 10px;
+    width: 100%;
+    background-color: #f0ad4e; 
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .SignUpButton:hover {
+    background-color: #ec971f;
+  }
+  
+  .LoginRedirect {
+    text-align: center;
+    margin-top: 15px;
+    color:black;
+  }
+  
+  .LoginRedirect a {
+    color: #337ab7;
+    text-decoration: none;
+  }
+  
+  .LoginRedirect a:hover {
+    text-decoration: underline;
+  }
+  
+  .message{
+   
+    color:rgb(160, 0, 0);
+  }

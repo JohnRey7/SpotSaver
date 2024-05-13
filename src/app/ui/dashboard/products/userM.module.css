@@ -1,0 +1,36 @@
+.users {
+    margin-left: 20px;
+    padding: 20px;
+}
+
+.user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.buttonEdit {
+    background-color: #EFDF05;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    margin-left: 850px;
+    border-radius: 10px;
+}
+.h2{
+    color:black;
+}
+.buttonDelete {
+    background-color: #800000;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+}
+.span{
+    color:black;
+}
