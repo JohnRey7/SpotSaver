@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import styles from "@/app/ui/login/login.module.css";
 
 
@@ -26,19 +26,28 @@ const SignInForm = () => {
             password: '',
         },
     });
-    const onSubmit = async (values: z.infer<typeof FormSchema>) =>  {
+    const onSubmit = async (values: z.infer<typeof FormSchema>) => {
         const signInData = await signIn('credentials', {
             email: values.email,
             password: values.password,
-            redirect: false,
+            redirect: false,  // Handle redirect manually
         });
+    
         if (signInData?.error) {
             console.error(signInData.error);
         } else {
-            router.push('/dashboard/admin/userm'); 
-            router.refresh();
+            
+            const session = await getSession();
+            if (session?.user?.role === 'ADMIN') {
+                router.push('/dashboard/admin/userm');
+                router.refresh();
+            } else {
+                router.push('/dashboard/user/profile');
+                router.refresh();
+            }
         }
     };
+    
 
     return (
         <div className={styles.Login}>

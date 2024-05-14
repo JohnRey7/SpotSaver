@@ -1,0 +1,35 @@
+.parkingmanagement {
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .statistics {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .stat {
+    width: 45%;
+    color: black;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .parkinglot {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    background-color: black;
+    gap: 5px;
+  }
+  
+  .slot {
+    height: 20px;
+    background-color: grey;
+  }
+  
+  .slot.taken {
+    background-color: red;
+  }
+  

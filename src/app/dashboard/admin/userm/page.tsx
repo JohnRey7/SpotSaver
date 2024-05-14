@@ -26,6 +26,7 @@ export default async function Home(){
     const session = await getServerSession(authOptions);
     const names = await getName();
     console.log(names);
+    
 
 
     if(session?.user){

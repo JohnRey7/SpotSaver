@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.main}>
-      gwapo
+     
       </div>
      
     </div>

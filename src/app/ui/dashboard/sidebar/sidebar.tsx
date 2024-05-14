@@ -36,16 +36,53 @@ const menuItems = [
       ],
     },
 ];
+const menuItemsUser = [
+  {
+      title: "",
+      list: [
+          { title: "Profile", path: "/dashboard/user/profile" },
+          { title: "Parking Reservation", path: "/dashboard/user/parkr" },
+          { title: "Generate QR Code", path: "/dashboard/user/parkr" },
+          { title: "Notification", path: "/dashboard/user/parkr" },
+          { title: "History", path: "/dashboard/user/parkr" },
+      ],
+  },
+];
     
 const Sidebar: React.FC = async () => {
   const session = await getServerSession(authOptions);
+  if(session?.user.role == 'ADMIN'){
+    return(
+      <div className={styles.container}>
+      <div className={styles.logo}>
+          <Image src="/logo.png" alt="SpotSaver Logo" width="300" height="120"/>
+      </div>
+      <ul className={styles.list}>
+          {menuItems.map(cat => (
+              <li key={cat.title}>
+                  <span className={styles.cat}>{cat.title}</span>
+                  {cat.list.map(item => (
+                      <MenuLink item={item} key={item.title} />
+                  ))}
+              </li>
+          ))}
+      </ul>
+      {session?.user ? (
+       <UserAccountNav/>
+      ) : (
+        <button className={styles.logoutButton}><Link href='/login'>Sign in</Link></button>
+      )}
+    </div>
+
+        )
+    }
     return (
         <div className={styles.container}>
             <div className={styles.logo}>
                 <Image src="/logo.png" alt="SpotSaver Logo" width="300" height="120"/>
             </div>
             <ul className={styles.list}>
-                {menuItems.map(cat => (
+                {menuItemsUser.map(cat => (
                     <li key={cat.title}>
                         <span className={styles.cat}>{cat.title}</span>
                         {cat.list.map(item => (
