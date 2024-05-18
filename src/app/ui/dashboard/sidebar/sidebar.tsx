@@ -41,7 +41,7 @@ const menuItemsUser = [
       title: "",
       list: [
           { title: "Profile", path: "/dashboard/user/profile" },
-          { title: "Parking Reservation", path: "/dashboard/user/parkr" },
+          { title: "Parking Reservation", path: "/dashboard/user/parkres" },
           { title: "Generate QR Code", path: "/dashboard/user/parkr" },
           { title: "Notification", path: "/dashboard/user/parkr" },
           { title: "History", path: "/dashboard/user/parkr" },
