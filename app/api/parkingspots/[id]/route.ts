@@ -1,24 +1,24 @@
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "~/lib/db";
-import { User, users } from "~/lib/schema";
+import { ParkingSpot, parkingSpot } from "~/lib/schema";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const returnedUser = await db.query.users.findFirst({ where: eq(users.id, id) });
-		if (!returnedUser) {
-			return NextResponse.json({ message: "User not found." }, { status: 404 });
+		const spot = await db.query.parkingSpot.findFirst({ where: eq(parkingSpot.id, id) });
+		if (!spot) {
+			return NextResponse.json({ message: "Parking spot not found." }, { status: 404 });
 		}
 
 		return NextResponse.json({
-			message: `Successfully fetched user ${id}`,
-			user: returnedUser,
+			message: `Successfully fetched parking spot id ${id}`,
+			parkingSpot: spot,
 		});
 	} catch (error) {
 		console.error(error);
@@ -28,19 +28,23 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const body = (await request.json()) as Partial<User>;
+		const body = (await request.json()) as Partial<ParkingSpot>;
 
-		const returnedUser = await db.update(users).set(body).where(eq(users.id, id)).returning();
+		const spot = await db
+			.update(parkingSpot)
+			.set(body)
+			.where(eq(parkingSpot.id, id))
+			.returning();
 
 		return NextResponse.json({
-			message: `Successfully updated user id ${id}`,
-			user: returnedUser[0],
+			message: `Successfully updated parking spot id ${id}`,
+			parkingSpot: spot[0],
 		});
 	} catch (error) {
 		console.error(error);
@@ -50,17 +54,17 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const returnedUser = await db.delete(users).where(eq(users.id, id)).returning();
+		const spot = await db.delete(parkingSpot).where(eq(parkingSpot.id, id)).returning();
 
 		return NextResponse.json({
-			message: `Successfully deleted user id ${id}`,
-			user: returnedUser[0],
+			message: `Successfully deleted parking spot id ${id}`,
+			parkingSpot: spot[0],
 		});
 	} catch (error) {
 		console.error(error);

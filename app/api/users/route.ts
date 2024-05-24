@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { db } from "~/lib/db";
 
 export async function GET(request: NextRequest) {
-	// get all users
-	return NextResponse.json({ test: "Successful GET /users" });
-}
+	try {
+		const returnedUsers = await db.query.users.findMany();
 
-export async function POST(request: NextRequest) {
-	// create a new user
-	const body = await request.json();
-	return NextResponse.json({ test: "Successful POST /users", body });
+		return NextResponse.json(
+			{ message: "Successfully fetched all users.", users: returnedUsers },
+			{ status: 200 }
+		);
+	} catch (err) {
+		console.error(err);
+		return NextResponse.json({ message: "An error occurred." }, { status: 500 });
+	}
 }

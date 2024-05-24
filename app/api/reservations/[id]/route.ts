@@ -1,24 +1,26 @@
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "~/lib/db";
-import { User, users } from "~/lib/schema";
+import { Reservation, reservation } from "~/lib/schema";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const returnedUser = await db.query.users.findFirst({ where: eq(users.id, id) });
-		if (!returnedUser) {
-			return NextResponse.json({ message: "User not found." }, { status: 404 });
+		const returnedReservation = await db.query.reservation.findFirst({
+			where: eq(reservation.id, id),
+		});
+		if (!returnedReservation) {
+			return NextResponse.json({ message: "Reservation not found." }, { status: 404 });
 		}
 
 		return NextResponse.json({
-			message: `Successfully fetched user ${id}`,
-			user: returnedUser,
+			message: `Successfully fetched reservation ${id}`,
+			reservation: returnedReservation,
 		});
 	} catch (error) {
 		console.error(error);
@@ -28,19 +30,23 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const body = (await request.json()) as Partial<User>;
+		const body = (await request.json()) as Partial<Reservation>;
 
-		const returnedUser = await db.update(users).set(body).where(eq(users.id, id)).returning();
+		const returnedReservation = await db
+			.update(reservation)
+			.set(body)
+			.where(eq(reservation.id, id))
+			.returning();
 
 		return NextResponse.json({
-			message: `Successfully updated user id ${id}`,
-			user: returnedUser[0],
+			message: `Successfully updated reservation id ${id}`,
+			reservation: returnedReservation[0],
 		});
 	} catch (error) {
 		console.error(error);
@@ -50,17 +56,20 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const returnedUser = await db.delete(users).where(eq(users.id, id)).returning();
+		const returnedReservation = await db
+			.delete(reservation)
+			.where(eq(reservation.id, id))
+			.returning();
 
 		return NextResponse.json({
-			message: `Successfully deleted user id ${id}`,
-			user: returnedUser[0],
+			message: `Successfully deleted reservation id ${id}`,
+			reservation: returnedReservation[0],
 		});
 	} catch (error) {
 		console.error(error);

@@ -1,24 +1,24 @@
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "~/lib/db";
-import { User, users } from "~/lib/schema";
+import { Vehicle, vehicle } from "~/lib/schema";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const returnedUser = await db.query.users.findFirst({ where: eq(users.id, id) });
-		if (!returnedUser) {
-			return NextResponse.json({ message: "User not found." }, { status: 404 });
+		const returnedVehicle = await db.query.vehicle.findFirst({ where: eq(vehicle.id, id) });
+		if (!returnedVehicle) {
+			return NextResponse.json({ message: "Vehicle not found." }, { status: 404 });
 		}
 
 		return NextResponse.json({
-			message: `Successfully fetched user ${id}`,
-			user: returnedUser,
+			message: `Successfully fetched vehicle ${id}`,
+			vehicle: returnedVehicle,
 		});
 	} catch (error) {
 		console.error(error);
@@ -28,19 +28,23 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const body = (await request.json()) as Partial<User>;
+		const body = (await request.json()) as Partial<Vehicle>;
 
-		const returnedUser = await db.update(users).set(body).where(eq(users.id, id)).returning();
+		const returnedVehicle = await db
+			.update(vehicle)
+			.set(body)
+			.where(eq(vehicle.id, id))
+			.returning();
 
 		return NextResponse.json({
-			message: `Successfully updated user id ${id}`,
-			user: returnedUser[0],
+			message: `Successfully updated vehicle id ${id}`,
+			vehicle: returnedVehicle[0],
 		});
 	} catch (error) {
 		console.error(error);
@@ -50,17 +54,17 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = params.id;
+		const id = parseInt(params.id);
 
-		if (!id) {
+		if (!id || isNaN(id)) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const returnedUser = await db.delete(users).where(eq(users.id, id)).returning();
+		const returnedVehicle = await db.delete(vehicle).where(eq(vehicle.id, id)).returning();
 
 		return NextResponse.json({
-			message: `Successfully deleted user id ${id}`,
-			user: returnedUser[0],
+			message: `Successfully deleted vehicle id ${id}`,
+			vehicle: returnedVehicle[0],
 		});
 	} catch (error) {
 		console.error(error);
