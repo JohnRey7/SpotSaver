@@ -1,35 +1,40 @@
 {
-  "name": "spotsaverr",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^3.3.4",
-    "@next-auth/prisma-adapter": "^1.0.7",
-    "@prisma/client": "^5.13.0",
-    "@tanstack/react-query": "^5.37.1",
-    "axios": "^1.6.8",
-    "bcrypt": "^5.1.1",
-    "next": "14.2.1",
-    "next-auth": "^4.24.7",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-hook-form": "^7.51.4",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.1",
-    "prisma": "^5.13.0",
-    "typescript": "^5"
-  }
+	"name": "spotsaver",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"turbo": "next dev --turbo",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"format": "prettier --write . \"!package-lock.json\" --ignore-path .gitignore",
+		"db": "drizzle-kit"
+	},
+	"dependencies": {
+		"@lucia-auth/adapter-drizzle": "^1.0.7",
+		"arctic": "^1.9.0",
+		"daisyui": "^4.11.1",
+		"drizzle-orm": "^0.30.10",
+		"lucia": "^3.2.0",
+		"next": "^14.2.3",
+		"oslo": "^1.2.0",
+		"postgres": "^3.4.4",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	},
+	"devDependencies": {
+		"@types/node": "^20.12.12",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"autoprefixer": "^10.4.19",
+		"drizzle-kit": "^0.21.4",
+		"eslint": "^8.57.0",
+		"eslint-config-next": "^14.2.3",
+		"eslint-config-prettier": "^9.1.0",
+		"postcss": "^8.4.38",
+		"prettier": "^3.2.5",
+		"prettier-plugin-tailwindcss": "^0.5.14",
+		"tailwindcss": "^3.4.3",
+		"typescript": "^5.4.5"
+	}
 }
