@@ -1,1 +1,3 @@
 # SpotSaver
+
+System Integration & Architecture
