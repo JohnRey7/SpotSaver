@@ -7,7 +7,7 @@ import { cache } from "react";
 import { Google } from "arctic";
 
 import { db } from "./db";
-import { sessions, users, type User as DatabaseUser } from "./schema";
+import { sessions, users, type UserSelect as DatabaseUser } from "./schema";
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
 
