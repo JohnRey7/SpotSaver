@@ -19,6 +19,7 @@ export const lucia = new Lucia(adapter, {
 	},
 	getUserAttributes: (attr) => ({
 		id: attr.id,
+		googleId: attr.googleId,
 		firstName: attr.firstName,
 		middleName: attr.middleName,
 		lastName: attr.lastName,
