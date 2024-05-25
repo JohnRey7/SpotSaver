@@ -1,6 +1,7 @@
+import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "~/lib/db";
-import { Reservation, reservation } from "~/lib/schema";
+import { Reservation, parkingSpot, reservation } from "~/lib/schema";
 
 export async function GET(request: NextRequest) {
 	try {
@@ -25,6 +26,12 @@ export async function POST(request: NextRequest) {
 		}
 
 		const newReservation = await db.insert(reservation).values(body).returning();
+
+		// also update the parking spot to be unavailable
+		await db
+			.update(parkingSpot)
+			.set({ availability: false })
+			.where(eq(parkingSpot.id, body.parkingId));
 
 		return NextResponse.json({
 			message: "Successfully created reservation.",
