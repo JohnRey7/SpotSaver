@@ -5,20 +5,20 @@ import { Payment, payment } from "~/lib/schema";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		const id = parseInt(params.id);
+		const id = params.id;
 
-		if (!id || isNaN(id)) {
+		if (!id) {
 			return NextResponse.json({ message: "Invalid ID." }, { status: 400 });
 		}
 
-		const returnedPayment = await db.query.payment.findFirst({ where: eq(payment.id, id) });
-		if (!returnedPayment) {
-			return NextResponse.json({ message: "Payment not found." }, { status: 404 });
-		}
+		const returnedPayments = await db.query.payment.findMany({
+			where: eq(payment.userId, id),
+			with: { reservation: true },
+		});
 
 		return NextResponse.json({
-			message: `Successfully fetched payment id ${id}`,
-			payment: returnedPayment,
+			message: `Successfully fetched payments from user id ${id}`,
+			payments: returnedPayments,
 		});
 	} catch (error) {
 		console.error(error);

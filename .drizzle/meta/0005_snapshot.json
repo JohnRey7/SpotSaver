@@ -1,11 +1,11 @@
 {
-  "id": "ba985bb9-6810-4863-ae60-00de20c5fe24",
+  "id": "e811ab10-c92e-4e66-8bea-17cd31919248",
   "prevId": "cdf68055-54e9-4306-87e9-769364f2859e",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
-    "public.notifications": {
-      "name": "notifications",
+    "public.notification": {
+      "name": "notification",
       "schema": "",
       "columns": {
         "id": {
@@ -37,9 +37,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "notifications_user_id_users_id_fk": {
-          "name": "notifications_user_id_users_id_fk",
-          "tableFrom": "notifications",
+        "notification_user_id_users_id_fk": {
+          "name": "notification_user_id_users_id_fk",
+          "tableFrom": "notification",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -92,6 +92,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "reservation_id": {
           "name": "reservation_id",
           "type": "integer",
@@ -127,6 +133,19 @@
       },
       "indexes": {},
       "foreignKeys": {
+        "payment_user_id_users_id_fk": {
+          "name": "payment_user_id_users_id_fk",
+          "tableFrom": "payment",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
         "payment_reservation_id_reservation_id_fk": {
           "name": "payment_reservation_id_reservation_id_fk",
           "tableFrom": "payment",

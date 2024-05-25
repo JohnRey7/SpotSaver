@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
 	boolean,
 	integer,
@@ -56,6 +57,9 @@ export const reservation = pgTable("reservation", {
 
 export const payment = pgTable("payment", {
 	id: serial("id").primaryKey(),
+	userId: text("user_id")
+		.references(() => users.id, { onDelete: "cascade" })
+		.notNull(),
 	reservationId: integer("reservation_id")
 		.references(() => reservation.id, { onDelete: "cascade" })
 		.notNull(),
@@ -64,6 +68,13 @@ export const payment = pgTable("payment", {
 	paymentDate: timestamp("payment_date", { withTimezone: true }).defaultNow().notNull(),
 	status: paymentStatusEnum("status").notNull(),
 });
+
+export const paymentRelations = relations(payment, ({ one }) => ({
+	reservation: one(reservation, {
+		fields: [payment.reservationId],
+		references: [reservation.id],
+	}),
+}));
 
 export const qrCode = pgTable("qr_code", {
 	id: serial("id").primaryKey(),

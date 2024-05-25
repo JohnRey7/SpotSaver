@@ -4,7 +4,7 @@ import { Payment, payment } from "~/lib/schema";
 
 export async function GET(request: NextRequest) {
 	try {
-		const payments = await db.query.payment.findMany();
+		const payments = await db.query.payment.findMany({ with: { reservation: true } });
 
 		return NextResponse.json(
 			{ message: "Successfully fetched all payments.", payments },
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 	try {
 		const body = (await request.json()) as Payment;
 
-		if (!body.reservationId || !body.amount || !body.methodOfPayment) {
+		if (!body.userId || !body.reservationId || !body.amount || !body.methodOfPayment) {
 			return NextResponse.json({ message: "Incomplete request body." }, { status: 400 });
 		}
 
