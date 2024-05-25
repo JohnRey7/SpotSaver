@@ -83,3 +83,7 @@ export type VehicleSelect = typeof vehicle.$inferSelect;
 export type ReservationSelect = typeof reservation.$inferSelect;
 export type PaymentSelect = typeof payment.$inferSelect;
 export type QrCodeSelect = typeof qrCode.$inferSelect;
+
+export type VehicleType = Vehicle["type"];
+export type Role = User["role"];
+export type PaymentStatus = Payment["status"];
