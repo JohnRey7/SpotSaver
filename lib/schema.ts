@@ -13,7 +13,7 @@ import {
 export const roleEnum = pgEnum("role", ["USER", "ADMIN"]);
 export const paymentStatusEnum = pgEnum("status", ["Pending", "Paid"]);
 export const vehicleType = pgEnum("type", ["Car", "Motorcycle", "Bicycle"]);
-export const notifType = pgEnum("type", ["REGISTER", "RESERVE"]);
+export const notifType = pgEnum("notif_type", ["REGISTER", "RESERVE"]);
 
 export const users = pgTable("users", {
 	id: text("id").primaryKey(),
@@ -89,7 +89,7 @@ export const notification = pgTable("notification", {
 	userId: text("user_id")
 		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
-	type: notifType("type").notNull(),
+	type: notifType("notif_type").notNull(),
 	timestamp: timestamp("timestamp", { withTimezone: true }).defaultNow().notNull(),
 });
 
