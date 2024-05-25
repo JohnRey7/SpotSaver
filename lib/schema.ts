@@ -12,6 +12,7 @@ import {
 export const roleEnum = pgEnum("role", ["USER", "ADMIN"]);
 export const paymentStatusEnum = pgEnum("status", ["Pending", "Paid"]);
 export const vehicleType = pgEnum("type", ["Car", "Motorcycle", "Bicycle"]);
+export const notifType = pgEnum("type", ["REGISTER", "RESERVE"]);
 
 export const users = pgTable("users", {
 	id: text("id").primaryKey(),
@@ -72,18 +73,30 @@ export const qrCode = pgTable("qr_code", {
 	code: text("code").notNull(),
 });
 
+export const notification = pgTable("notification", {
+	id: serial("id").primaryKey(),
+	userId: text("user_id")
+		.references(() => users.id, { onDelete: "cascade" })
+		.notNull(),
+	type: notifType("type").notNull(),
+	timestamp: timestamp("timestamp", { withTimezone: true }).defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferInsert;
 export type ParkingSpot = typeof parkingSpot.$inferInsert;
 export type Reservation = typeof reservation.$inferInsert;
 export type Payment = typeof payment.$inferInsert;
 export type QrCode = typeof qrCode.$inferInsert;
+export type Notification = typeof notification.$inferInsert;
 
 export type UserSelect = typeof users.$inferSelect;
 export type ParkingSpotSelect = typeof parkingSpot.$inferSelect;
 export type ReservationSelect = typeof reservation.$inferSelect;
 export type PaymentSelect = typeof payment.$inferSelect;
 export type QrCodeSelect = typeof qrCode.$inferSelect;
+export type NotificationSelect = typeof notification.$inferSelect;
 
 export type VehicleType = Reservation["vehicle"];
 export type Role = User["role"];
 export type PaymentStatus = Payment["status"];
+export type NotifType = Notification["type"];
