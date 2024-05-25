@@ -27,20 +27,23 @@ export async function POST(request: NextRequest) {
 
 		const date = body.date ? new Date(body.date) : undefined;
 
-		const newReservation = await db
-			.insert(reservation)
-			.values({ ...body, date })
-			.returning();
+		const newReservation = await db.transaction(async (tx) => {
+			const res = await tx
+				.insert(reservation)
+				.values({ ...body, date })
+				.returning();
+			// also update the parking spot to be unavailable
+			await db
+				.update(parkingSpot)
+				.set({ availability: false })
+				.where(eq(parkingSpot.id, body.parkingId));
 
-		// also update the parking spot to be unavailable
-		await db
-			.update(parkingSpot)
-			.set({ availability: false })
-			.where(eq(parkingSpot.id, body.parkingId));
+			return res;
+		});
 
 		return NextResponse.json({
 			message: "Successfully created reservation.",
-			reservation: newReservation,
+			reservation: newReservation[0],
 		});
 	} catch (err) {
 		console.error(err);

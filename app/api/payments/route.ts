@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
 		return NextResponse.json({
 			message: "Successfully created payment.",
-			payment: newPayment,
+			payment: newPayment[0],
 		});
 	} catch (err) {
 		console.error(err);

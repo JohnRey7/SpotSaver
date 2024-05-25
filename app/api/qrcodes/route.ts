@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
 		return NextResponse.json({
 			message: "Successfully created QR code.",
-			qrCode: newQrCode,
+			qrCode: newQrCode[0],
 		});
 	} catch (err) {
 		console.error(err);
