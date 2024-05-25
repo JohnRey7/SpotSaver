@@ -1,0 +1,1 @@
+ALTER TABLE "reservation" ALTER COLUMN "start_time" SET DATA TYPE time with time zone;

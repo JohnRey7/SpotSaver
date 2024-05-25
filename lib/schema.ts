@@ -1,4 +1,13 @@
-import { boolean, integer, pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import {
+	boolean,
+	integer,
+	pgEnum,
+	pgTable,
+	serial,
+	text,
+	time,
+	timestamp,
+} from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum("role", ["USER", "ADMIN"]);
 export const paymentStatusEnum = pgEnum("status", ["Pending", "Paid"]);
@@ -41,7 +50,7 @@ export const reservation = pgTable("reservation", {
 		.notNull(),
 	vehicle: vehicleType("vehicle").notNull(),
 	date: timestamp("date", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
-	startTime: timestamp("start_time", { withTimezone: true }).notNull(),
+	startTime: time("start_time", { withTimezone: true }).notNull(),
 });
 
 export const payment = pgTable("payment", {

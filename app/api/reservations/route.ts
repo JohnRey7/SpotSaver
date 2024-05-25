@@ -25,12 +25,11 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ message: "Incomplete request body." }, { status: 400 });
 		}
 
-		const startTime = new Date(body.startTime);
 		const date = body.date ? new Date(body.date) : undefined;
 
 		const newReservation = await db
 			.insert(reservation)
-			.values({ ...body, startTime, date })
+			.values({ ...body, date })
 			.returning();
 
 		// also update the parking spot to be unavailable
