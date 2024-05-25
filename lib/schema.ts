@@ -1,7 +1,8 @@
 import { boolean, integer, pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum("role", ["USER", "ADMIN"]);
-export const paymentStatusEnum = pgEnum("status", ["PENDING", "PAID"]);
+export const paymentStatusEnum = pgEnum("status", ["Pending", "Paid"]);
+export const vehicleType = pgEnum("type", ["Car", "Motorcycle", "Bicycle"]);
 
 export const users = pgTable("users", {
 	id: text("id").primaryKey(),
@@ -32,7 +33,7 @@ export const parkingSpot = pgTable("parking_spot", {
 
 export const vehicle = pgTable("vehicle", {
 	id: serial("id").primaryKey(),
-	name: text("name").notNull(),
+	type: vehicleType("type").notNull(),
 });
 
 export const reservation = pgTable("reservation", {

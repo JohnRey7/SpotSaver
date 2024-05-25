@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 	try {
 		const body = (await request.json()) as Vehicle;
 
-		if (!body.name) {
+		if (!body.type) {
 			return NextResponse.json({ message: "Incomplete request body." }, { status: 400 });
 		}
 
