@@ -31,11 +31,6 @@ export const parkingSpot = pgTable("parking_spot", {
 	availability: boolean("availability").notNull(),
 });
 
-export const vehicle = pgTable("vehicle", {
-	id: serial("id").primaryKey(),
-	type: vehicleType("type").notNull(),
-});
-
 export const reservation = pgTable("reservation", {
 	id: serial("id").primaryKey(),
 	userId: text("user_id")
@@ -44,9 +39,7 @@ export const reservation = pgTable("reservation", {
 	parkingId: integer("parking_id")
 		.references(() => parkingSpot.id, { onDelete: "cascade" })
 		.notNull(),
-	vehicleId: integer("vehicle_id")
-		.references(() => vehicle.id, { onDelete: "cascade" })
-		.notNull(),
+	vehicle: vehicleType("vehicle").notNull(),
 	date: timestamp("date", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
 	startTime: timestamp("start_time", { withTimezone: true }).notNull(),
 });
@@ -72,18 +65,16 @@ export const qrCode = pgTable("qr_code", {
 
 export type User = typeof users.$inferInsert;
 export type ParkingSpot = typeof parkingSpot.$inferInsert;
-export type Vehicle = typeof vehicle.$inferInsert;
 export type Reservation = typeof reservation.$inferInsert;
 export type Payment = typeof payment.$inferInsert;
 export type QrCode = typeof qrCode.$inferInsert;
 
 export type UserSelect = typeof users.$inferSelect;
 export type ParkingSpotSelect = typeof parkingSpot.$inferSelect;
-export type VehicleSelect = typeof vehicle.$inferSelect;
 export type ReservationSelect = typeof reservation.$inferSelect;
 export type PaymentSelect = typeof payment.$inferSelect;
 export type QrCodeSelect = typeof qrCode.$inferSelect;
 
-export type VehicleType = Vehicle["type"];
+export type VehicleType = Reservation["vehicle"];
 export type Role = User["role"];
 export type PaymentStatus = Payment["status"];

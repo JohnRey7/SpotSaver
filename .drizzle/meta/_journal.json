@@ -15,6 +15,20 @@
       "when": 1716613320342,
       "tag": "0001_freezing_shen",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1716622254577,
+      "tag": "0002_nebulous_naoko",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1716622278309,
+      "tag": "0003_dashing_deathstrike",
+      "breakpoints": true
     }
   ]
 }

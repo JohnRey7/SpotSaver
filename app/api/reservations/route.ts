@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 	try {
 		const body = (await request.json()) as Reservation;
 
-		if (!body.userId || !body.vehicleId || !body.parkingId || !body.startTime) {
+		if (!body.userId || !body.vehicle || !body.parkingId || !body.startTime) {
 			return NextResponse.json({ message: "Incomplete request body." }, { status: 400 });
 		}
 
