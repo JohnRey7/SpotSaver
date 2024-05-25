@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 import { google, lucia, redirectIfAuth } from "~/lib/auth";
 import { db } from "~/lib/db";
-import { users } from "~/lib/schema";
+import { notification, users } from "~/lib/schema";
 
 interface GoogleUser {
 	sub: string;
@@ -61,13 +61,19 @@ export async function GET(request: Request): Promise<Response> {
 
 		const userId = generateId(14);
 
-		await db.insert(users).values({
-			id: userId,
-			googleId: googleUser.sub,
-			email: googleUser.email,
-			firstName: googleUser.given_name,
-			lastName: googleUser.family_name,
-			role: "USER",
+		await db.transaction(async (tx) => {
+			await tx.insert(users).values({
+				id: userId,
+				googleId: googleUser.sub,
+				email: googleUser.email,
+				firstName: googleUser.given_name,
+				lastName: googleUser.family_name,
+				role: "USER",
+			});
+			await tx.insert(notification).values({
+				type: "REGISTER",
+				userId,
+			});
 		});
 
 		const session = await lucia.createSession(userId, {});

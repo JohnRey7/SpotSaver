@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "~/lib/db";
-import { Reservation, parkingSpot, reservation } from "~/lib/schema";
+import { Reservation, notification, parkingSpot, reservation } from "~/lib/schema";
 
 export async function GET(request: NextRequest) {
 	try {
@@ -37,6 +37,9 @@ export async function POST(request: NextRequest) {
 				.update(parkingSpot)
 				.set({ availability: false })
 				.where(eq(parkingSpot.id, body.parkingId));
+
+			// insert a notification
+			await db.insert(notification).values({ type: "RESERVE", userId: body.userId });
 
 			return res;
 		});
