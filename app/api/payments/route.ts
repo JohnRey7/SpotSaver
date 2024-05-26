@@ -4,7 +4,9 @@ import { Payment, payment } from "~/lib/schema";
 
 export async function GET(request: NextRequest) {
 	try {
-		const payments = await db.query.payment.findMany({ with: { reservation: true } });
+		const payments = await db.query.payment.findMany({
+			with: { reservation: { with: { parkingSpot: true } } },
+		});
 
 		return NextResponse.json(
 			{ message: "Successfully fetched all payments.", payments },

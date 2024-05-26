@@ -13,7 +13,7 @@ import {
 export const roleEnum = pgEnum("role", ["USER", "ADMIN"]);
 export const paymentStatusEnum = pgEnum("status", ["Pending", "Paid"]);
 export const vehicleType = pgEnum("type", ["Car", "Motorcycle", "Bicycle"]);
-export const notifType = pgEnum("notif_type", ["REGISTER", "RESERVE"]);
+export const notifType = pgEnum("notif_type", ["REGISTER", "RESERVE", "CANCEL"]);
 
 export const users = pgTable("users", {
 	id: text("id").primaryKey(),
@@ -73,6 +73,13 @@ export const paymentRelations = relations(payment, ({ one }) => ({
 	reservation: one(reservation, {
 		fields: [payment.reservationId],
 		references: [reservation.id],
+	}),
+}));
+
+export const reservationRelations = relations(reservation, ({ one }) => ({
+	parkingSpot: one(parkingSpot, {
+		fields: [reservation.parkingId],
+		references: [parkingSpot.id],
 	}),
 }));
 

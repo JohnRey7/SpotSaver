@@ -1,0 +1,1 @@
+ALTER TYPE "notif_type" ADD VALUE 'CANCEL';
