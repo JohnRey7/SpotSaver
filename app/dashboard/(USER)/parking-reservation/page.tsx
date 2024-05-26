@@ -17,7 +17,7 @@ export default async function ParkingReservationPage() {
 	let parkingSpots: ParkingSpotSelect[] = [];
 	try {
 		const response = await fetch(`${baseUrl}/api/parkingspots`, {
-			cache: "no-cache",
+			cache: "no-store",
 		});
 		const data = await response.json();
 		parkingSpots = data.parkingspots;

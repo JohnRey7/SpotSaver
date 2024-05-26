@@ -17,7 +17,7 @@ export default async function HistoryPage() {
 	let payments: PaymentSelect[] = [];
 	try {
 		const response = await fetch(`${baseUrl}/api/payments`, {
-			cache: "no-cache",
+			cache: "no-store",
 		});
 		const data = await response.json();
 		payments = data.payments;

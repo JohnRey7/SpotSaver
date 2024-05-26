@@ -10,7 +10,7 @@ export default async function NotificationsPage() {
 	let notifications: NotificationSelect[] = [];
 	try {
 		const response = await fetch(`${baseUrl}/api/notifications/${user?.id}`, {
-			cache: "no-cache",
+			cache: "no-store",
 		});
 		const data = await response.json();
 		notifications = data.notifications;
@@ -21,7 +21,7 @@ export default async function NotificationsPage() {
 	let payments: PaymentSelect[] = [];
 	try {
 		const response = await fetch(`${baseUrl}/api/payments`, {
-			cache: "no-cache",
+			cache: "no-store",
 		});
 		const data = await response.json();
 		payments = data.payments;

@@ -7,7 +7,7 @@ export default async function UserManagementPage() {
 	let users: UserSelect[] = [];
 	try {
 		const response = await fetch(`${baseUrl}/api/users/`, {
-			cache: "no-cache",
+			cache: "no-store",
 		});
 		const data = await response.json();
 		users = data.users;

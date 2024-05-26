@@ -10,7 +10,7 @@ export default async function AdminNotificationsPage() {
 	let notifications: NotificationSelect[] = [];
 	try {
 		const response = await fetch(`${baseUrl}/api/notifications/`, {
-			cache: "no-cache",
+			cache: "no-store",
 		});
 		const data = await response.json();
 		notifications = data.notifications;
