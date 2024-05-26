@@ -21,7 +21,7 @@ type SidebarProps = { role: "USER" | "ADMIN" | null | undefined };
 
 export default function Sidebar({ role }: SidebarProps) {
 	return (
-		<nav className="h-screen sticky top-0">
+		<nav className="sticky top-0 h-screen">
 			<aside className="bg-yellow flex h-screen w-72 flex-col transition-transform sm:translate-x-0">
 				<Image
 					src={logo}

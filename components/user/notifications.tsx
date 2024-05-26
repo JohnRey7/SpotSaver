@@ -24,7 +24,7 @@ export default function Notifications({ notifications, payments }: Notifications
 							className="bg-lightgray dropdown dropdown-hover mb-3 w-full rounded-md p-3 hover:bg-[#c7c7c7]"
 						>
 							<section className="flex justify-between">
-								<div>
+								<div className="font-semibold">
 									<div className="px-4 py-2">
 										{type === "RESERVE" && (
 											<>

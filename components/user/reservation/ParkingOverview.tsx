@@ -20,7 +20,7 @@ export default function ParkingOverviewModal({
 	return (
 		<dialog id={id} className="modal" ref={modalRef}>
 			<div className="modal-box">
-				<h3 className="text-lg font-bold">{title}</h3>
+				<h3 className="text-xl text-center font-bold">{title}</h3>
 				<div className="py-4">{children}</div>
 				<div className="modal-action justify-center">
 					<button type="button" onClick={onConfirm} className="btn">

@@ -56,10 +56,25 @@ export default function ReservationTable({ parkingspots, id }: ReservationTableP
 
 		setFormData(reservation as reservationProps);
 		setPaymentMethod(paymentMethod as paymentMethodsProps);
-		(document.getElementById("handle-reservation-overview") as HTMLDialogElement).showModal();
+
+		if (!(reservation.date && reservation.startTime)) {
+			return toast.error("Please choose a date and time.");
+		} else if (!reservation.date) {
+			return toast.error("Please choose a date.");
+		} else if (!reservation.startTime) {
+			return toast.error("Please choose a time.");
+		} else {
+			(
+				document.getElementById("handle-reservation-overview") as HTMLDialogElement
+			).showModal();
+		}
 	}
 
 	function handleParkingReservationOverview() {
+		if (!paymentOption) {
+			return toast.error("Please choose a payment method.");
+		}
+
 		(document.getElementById("handle-reservation-overview") as HTMLDialogElement).close();
 		(document.getElementById("handle-parking-reserved") as HTMLDialogElement).showModal();
 	}
@@ -114,7 +129,11 @@ export default function ReservationTable({ parkingspots, id }: ReservationTableP
 
 				<div className="flex justify-between pt-5">
 					<div className="dropdown dropdown-end">
-						<select name="vehicle" className="bg-red select w-full max-w-xs text-white">
+						<select
+							name="vehicle"
+							required
+							className="bg-red select w-full max-w-xs text-white"
+						>
 							<option value="">Choose Vehicle</option>
 							{vehicleType.map(({ name, label }) => (
 								<Fragment key={name}>
@@ -143,19 +162,31 @@ export default function ReservationTable({ parkingspots, id }: ReservationTableP
 					}
 				>
 					<div>
-						<div className="flex justify-between">
+						<div className="flex items-center justify-between border-b-2">
+							<div className="flex flex-col">
+								<p>
+									Slot: <b>{formData?.parkingId}</b>
+								</p>
+								<p>
+									Location: <b>{parkingLocation}</b>
+								</p>
+								<p>
+									Date: <b>{formData?.date}</b>
+								</p>
+							</div>
 							<p>
-								Slot: {formData?.parkingId}, Location: {parkingLocation},
-								{formData?.date}
+								Price: <b>50</b>
 							</p>
-							<p>Price: 50</p>
 						</div>
 						<div className="flex">
-							<p className="ml-auto">Total Price: 50</p>
+							<p className="ml-auto">
+								Total Price: <b>50</b>
+							</p>
 						</div>
-						<div className="flex">
-							<p className="">Choose a Payment Method</p>
-						</div>
+
+						<p className="mb-2 mt-5">
+							<i>Choose a Payment Method</i>
+						</p>
 
 						<section className="flex justify-between">
 							<RadioButton
@@ -206,22 +237,27 @@ export default function ReservationTable({ parkingspots, id }: ReservationTableP
 					}
 				>
 					<div className="flex flex-col gap-5">
-						<div className="flex justify-between">
-							<p>
-								Slot: {formData?.parkingId}, Location: {parkingLocation},{" "}
-								{formData?.date}
-							</p>
-							<p>Price: 50</p>
+						<div className="flex items-center justify-center">
+							<div className="flex gap-4">
+								<p>
+									Slot: <b>{formData?.parkingId}</b>
+								</p>
+								<p>
+									Location: <b>{parkingLocation}</b>
+								</p>
+								<p>
+									Date: <b>{formData?.date}</b>
+								</p>
+							</div>
 						</div>
 						<div className="flex flex-col items-center justify-between gap-5">
 							<Image
 								src={QRCode}
 								alt="QR Code png"
-								width={100}
-								height={100}
+								width={200}
+								height={200}
 								priority
 							/>
-							<p>Use this QR code</p>
 						</div>
 					</div>
 				</ParkingOverviewModal>
@@ -232,49 +268,43 @@ export default function ReservationTable({ parkingspots, id }: ReservationTableP
 
 function RadioButton({ setPaymentOption }: { setPaymentOption: (value: string) => void }) {
 	return (
-		<fieldset className="flex flex-col">
-			<div className="flex">
-				<label>
-					<input
-						id="GCASH"
-						type="radio"
-						value="gcash"
-						name="methodOfPayment"
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setPaymentOption(e.target.value)
-						}
-					/>
-					GCASH
-				</label>
-			</div>
-			<div className="flex">
-				<label>
-					<input
-						id="VISA"
-						type="radio"
-						value="visa"
-						name="methodOfPayment"
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setPaymentOption(e.target.value)
-						}
-					/>
-					VISA
-				</label>
-			</div>
-			<div className="flex">
-				<label>
-					<input
-						id="MASTERCARD"
-						type="radio"
-						value="mastercard"
-						name="methodOfPayment"
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setPaymentOption(e.target.value)
-						}
-					/>
-					MASTERCARD
-				</label>
-			</div>
+		<fieldset className="flex flex-col gap-3">
+			<label className="flex gap-2 font-semibold">
+				<input
+					id="GCASH"
+					type="radio"
+					value="gcash"
+					name="methodOfPayment"
+					onChange={(e: ChangeEvent<HTMLInputElement>) =>
+						setPaymentOption(e.target.value)
+					}
+				/>
+				GCASH
+			</label>
+			<label className="flex gap-2 font-semibold">
+				<input
+					id="VISA"
+					type="radio"
+					value="visa"
+					name="methodOfPayment"
+					onChange={(e: ChangeEvent<HTMLInputElement>) =>
+						setPaymentOption(e.target.value)
+					}
+				/>
+				VISA
+			</label>
+			<label className="flex gap-2 font-semibold">
+				<input
+					id="MASTERCARD"
+					type="radio"
+					value="mastercard"
+					name="methodOfPayment"
+					onChange={(e: ChangeEvent<HTMLInputElement>) =>
+						setPaymentOption(e.target.value)
+					}
+				/>
+				MASTERCARD
+			</label>
 		</fieldset>
 	);
 }
