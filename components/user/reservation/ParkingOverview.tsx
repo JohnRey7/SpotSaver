@@ -23,7 +23,7 @@ export default function ParkingOverviewModal({
 				<h3 className="text-lg font-bold">{title}</h3>
 				<div className="py-4">{children}</div>
 				<div className="modal-action justify-center">
-					<button type="submit" onClick={onConfirm} className="btn">
+					<button type="button" onClick={onConfirm} className="btn">
 						Yes
 					</button>
 					<button

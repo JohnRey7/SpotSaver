@@ -82,13 +82,10 @@ export default function ReservationTable({ parkingspots, id }: ReservationTableP
 		});
 
 		if (reservation.ok && payment.ok) {
+			(document.getElementById("handle-parking-reserved") as HTMLDialogElement).close();
 			router.refresh();
 			return toast.success("You have successfully reserved a parking slot.");
 		}
-
-		// console.log({ userId: id, ...formData });
-		// console.log(paymentMethod);
-		(document.getElementById("handle-parking-reserved") as HTMLDialogElement).close();
 	}
 
 	const parkingLocation = parkingspots.find(
