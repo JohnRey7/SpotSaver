@@ -16,6 +16,7 @@ body {
 	height: 100%;
 	object-fit: cover;
 	z-index: -1;
+	background-image: url('/cit.png');
 }
 
 .bg-lightgray {
