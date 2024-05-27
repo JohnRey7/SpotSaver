@@ -44,7 +44,6 @@ export default async function ReportAndAnalyticsPage() {
 						</div>
 						<div>
 							<p>Available Slots: {available}</p>
-							<p>Recently Updated: DATE AND TIME</p>
 						</div>
 					</div>
 				</section>
@@ -68,7 +67,6 @@ export default async function ReportAndAnalyticsPage() {
 						</div>
 						<div>
 							<p>Available Slots: {notAvailable}</p>
-							<p>Recently Updated: DATE AND TIME</p>
 						</div>
 					</div>
 				</section>
