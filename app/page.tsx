@@ -10,5 +10,5 @@ export default async function Home() {
 		return redirect("/dashboard/profile");
 	}
 
-	return <main>Hello world</main>;
+	return redirect("/login");
 }
